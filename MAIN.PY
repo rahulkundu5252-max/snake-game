@@ -3,9 +3,7 @@ import pygame
 import random
 import sys
 
-# =========================
-# INITIALIZE
-# =========================
+
 pygame.init()
 
 # SCREEN SETTINGS
@@ -16,21 +14,19 @@ CELL_SIZE = 20
 screen = pygame.display.set_mode((WIDTH, HEIGHT))
 pygame.display.set_caption("Snake Game")
 
-# COLORS
+
 BLACK = (0, 0, 0)
 GREEN = (0, 255, 0)
 RED = (255, 0, 0)
 WHITE = (255, 255, 255)
 
-# CLOCK
+
 clock = pygame.time.Clock()
 
-# FONT
+
 font = pygame.font.SysFont(None, 40)
 
-# =========================
-# SNAKE SETTINGS
-# =========================
+
 snake = [(100, 100)]
 
 snake_direction = (CELL_SIZE, 0)
@@ -43,9 +39,7 @@ food = (food_x, food_y)
 score = 0
 
 
-# =========================
-# DRAW SCORE
-# =========================
+
 def draw_score():
 
     score_text = font.render(f"Score: {score}", True, WHITE)
@@ -53,12 +47,9 @@ def draw_score():
     screen.blit(score_text, (10, 10))
 
 
-# =========================
-# GAME LOOP
-# =========================
 while True:
 
-    # EVENTS
+    
     for event in pygame.event.get():
 
         if event.type == pygame.QUIT:
@@ -80,7 +71,7 @@ while True:
             elif event.key == pygame.K_RIGHT and snake_direction != (-CELL_SIZE, 0):
                 snake_direction = (CELL_SIZE, 0)
 
-    # MOVE SNAKE
+    
     head_x, head_y = snake[0]
 
     new_head = (
@@ -90,7 +81,7 @@ while True:
 
     snake.insert(0, new_head)
 
-    # EAT FOOD
+    
     if new_head == food:
 
         score += 1
@@ -103,7 +94,7 @@ while True:
     else:
         snake.pop()
 
-    # COLLISION WITH WALL
+    
     if (
         new_head[0] < 0 or
         new_head[0] >= WIDTH or
@@ -116,10 +107,10 @@ while True:
     if new_head in snake[1:]:
         break
 
-    # DRAW SCREEN
+    
     screen.fill(BLACK)
 
-    # DRAW SNAKE
+    
     for segment in snake:
         pygame.draw.rect(
             screen,
@@ -127,7 +118,7 @@ while True:
             (segment[0], segment[1], CELL_SIZE, CELL_SIZE)
         )
 
-    # DRAW FOOD
+    
     pygame.draw.rect(
         screen,
         RED,
@@ -142,9 +133,7 @@ while True:
     clock.tick(10)
 
 
-# =========================
-# GAME OVER SCREEN
-# =========================
+
 screen.fill(BLACK)
 
 game_over_text = font.render("GAME OVER", True, RED)
